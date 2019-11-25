@@ -11,6 +11,16 @@ const getUsers = function(req, res) {
 }
 
 const getUser = function(req, res) {
+  const getUser = function(req, res) {
+  User.findById(req.user._id).then(function(user) {
+    if ( !user ) {
+      return res.send({ error : 'User not found' })
+    }
+    return res.send(user)
+  }).catch(function(error) {
+    return res.status(404).send({ error })
+  })
+}
   // cualquier usuario no deberia ser capaz de ver la info de otro usuario
   // a menos que sea un admin. Aqui yo ya no admitire que me pasen el :id como
   // parametro. Solo usare el id de la request-> req.user._id
@@ -44,6 +54,7 @@ const login = function(req, res) {
   User.findByCredentials(req.body.email, req.body.password).then(function(user){
     user.generateToken().then(function(token){
       return res.send({user, token})
+      console.log(token)
     }).catch(function(error){
       return res.status(401).send({ error: error })
     })
