@@ -1,12 +1,8 @@
-
 const mongoose = require('mongoose')
 
-if ( process.env.NODE_ENV === 'production') {
-  var connectionURL = process.env.DB_CONNECTION_STRING
-} else {
-  const config = require('../config.js')
-  var connectionURL = config.connectionURL
-}
+// revisa tu connectionURL aqui :-)
+
+var connectionURL = process.env.DB_CONNECTION_STRING || require('../config.js').connectionURL
 
 mongoose.connect( connectionURL, {
   useNewUrlParser: true,
